@@ -23,7 +23,8 @@ You will learn how to authenticate with AWS via the command line and then get ac
 
 The VPC is the single resource we're adding in this session.
 
-![Architecture diagram](../images/AWS_Architecture_Session_1.png)
+<img width="393" alt="image" src="https://github.com/krishanuc1001/Infra-as-Code-Assignments/assets/40739038/4362737f-a19e-4639-96c3-26aa91e31081">
+
 
 ### Pre-requisites, Deploy and Clean Up Instructions
 
