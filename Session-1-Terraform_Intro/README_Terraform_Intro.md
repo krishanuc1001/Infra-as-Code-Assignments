@@ -94,6 +94,8 @@ terraform destroy
 
 9. We recommend committing your code to your repo if you haven't done so already.
 
+![VPC Created](../images/Session-1-Intro-VPC.png)
+
 ### Steps/Tasks for Goal 2 (Optional) [Difficulty Rating: 2 (easy)]
 
 Although this course focuses on Terraform, we want to give you some exposure to an alternative 'Infrastructure as Code' framework, in this case AWS Cloudformation.  The cloudformation examples are very simple, they will create a VPC just like you have already done with Terraform.  You will see two Cloudformation templates in this folder which you can test out, one is in yaml format and the other in json format but they do the same thing (create a VPC).
