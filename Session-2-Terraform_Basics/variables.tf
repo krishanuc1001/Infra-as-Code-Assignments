@@ -8,6 +8,11 @@ variable "region" {
   description = "Region to deploy the solution"
 }
 
+variable "profile" {
+  type        = string
+  description = "AWS profile to use for the deployment"
+}
+
 variable "vpc_cidr" {
   type        = string
   description = "VPC CIDR block"
@@ -34,8 +39,8 @@ variable "subnet4_cidr" {
 }
 
 variable "subnet5_cidr" {
-    type        = string
-    description = "Subnet 5 CIDR block"
+  type        = string
+  description = "Subnet 5 CIDR block"
 }
 
 variable "subnet6_cidr" {
