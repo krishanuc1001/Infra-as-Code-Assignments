@@ -111,6 +111,9 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors before proceeding, it is also worth logging into the AWS Console to have a look at your VPC and subnets to see if they look ok, correct tags and CIDR blocks, etc.
 
+![VPC-Subnets](../images/Session-2-Goal 1-VPC-Subnets.png)
+
+
 8. We are about to add more Terraform resources which will have relationships with other Terraform resources. This is where it is important to name your resources appropriately. In the Terraform documentation many of the resources will be called example or main, you should use common sense in naming them something related to their purpose. Add the following resources into the network.tf file:
 
     - 1 x [internet gateway](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway), apply a suitable tag name.
@@ -140,6 +143,8 @@ terraform apply -var-file="dev.tfvars"
 ```
 
 Troubleshoot any errors before proceeding.
+
+
 
 12. Lastly we would like to get an output varaible of the VPC Id. Create an `outputs.tf` file and add an [output variable](https://developer.hashicorp.com/terraform/language/values/outputs) for this (don't forget to add a description attribute).
 
