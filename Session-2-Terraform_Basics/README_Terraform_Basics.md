@@ -151,6 +151,21 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors before proceeding.
 
+![RouteTables](../images/Session-2-Goal 1-RouteTables.png)
+
+![Public RT-Subnet-1-association](../images/Session-2-Goal 1-RTA-Public Subnet-RT1.png)
+
+![Public RT-Subnet-2-association](../images/Session-2-Goal 1-RTA-Public Subnet-RT2.png)
+
+![Private RT-Subnet-1-association](../images/Session-2-Goal 1-RTA-Private Subnet-RT1.png)
+
+![Private RT-Subnet-2-association](../images/Session-2-Goal 1-RTA-Private Subnet-RT2.png)
+
+
+
+
+
+
 
 
 12. Lastly we would like to get an output varaible of the VPC Id. Create an `outputs.tf` file and add an [output variable](https://developer.hashicorp.com/terraform/language/values/outputs) for this (don't forget to add a description attribute).
