@@ -129,6 +129,13 @@ terraform apply -var-file="dev.tfvars"
 
 Troubleshoot any errors before proceeding.
 
+![InternetGateway](../images/Session-2-Goal 1-InternetGateway.png)
+
+![ElasticIP](../images/Session-2-Goal 1-ElasticIP.png)
+
+![NATGateway](../images/Session-2-Goal 1-NATGateway.png)
+
+
 10. Now we will add the route tables and associate them with the subnets. We will create a public route table which will have a route to the internet (`0.0.0.0`) via the internet gateway resource. We will also create a private route table which will have a route to the internet (`0.0.0.0`) via the NAT gateway resource. We will then associate the public subnet resources with the public route table and the private subnet resources with the private route table.
 
 In network.tf add 2 x [Route Table](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) resources, one for public routing and one for private routing (each route table should only have a single route for `0.0.0.0/0`).

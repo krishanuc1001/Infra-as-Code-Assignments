@@ -79,3 +79,28 @@ resource "aws_subnet" "subnet_secure_2" {
     Name = format("%s-secure-subnet-2", var.prefix)
   }
 }
+
+
+# Internet Gateway
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = format("%s-igw", var.prefix)
+  }
+}
+
+# Elastic IP
+resource "aws_eip" "eip" {
+  domain = "vpc"
+}
+
+# NAT Gateway (associate it with the Elastic IP above, with one of the private subnets and use a suitable tag name)
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.eip.id
+  subnet_id     = aws_subnet.subnet_private_1.id
+
+  tags = {
+    Name = format("%s-nat", var.prefix)
+  }
+}
