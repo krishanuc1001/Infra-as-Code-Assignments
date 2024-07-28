@@ -16,6 +16,11 @@ resource "aws_subnet" "subnet_public_1" {
   availability_zone       = format("%sa", var.region)
 
   tags = {
-    Name = "tw-krish-iac-lab-dev-subnet-1"
+    Name = format("%s-public-subnet1", var.prefix)
   }
+}
+
+moved {
+  from = aws_subnet.subnet_public_2
+  to   = aws_subnet.subnet_public_1
 }
