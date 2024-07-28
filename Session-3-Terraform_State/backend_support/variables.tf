@@ -15,3 +15,8 @@ variable "profile" {
   description = "AWS profile to use for the deployment"
   default = "tw-beach"
 }
+
+variable "vpc_cidr" {
+  type        = string
+  description = "VPC CIDR block"
+}
