@@ -13,10 +13,15 @@ variable "region" {
 variable "profile" {
   type        = string
   description = "AWS profile to use for the deployment"
-  default = "tw-beach"
+  default     = "tw-beach"
 }
 
 variable "vpc_cidr" {
   type        = string
   description = "VPC CIDR block"
+}
+
+variable "subnet1_cidr" {
+  type        = string
+  description = "Subnet 1 CIDR block"
 }

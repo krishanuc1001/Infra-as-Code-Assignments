@@ -9,14 +9,9 @@ resource "aws_vpc" "vpc" {
   }
 }
 
-import {
-  to = aws_subnet.subnet_public_1
-  id = "subnet-027e38db3adebb9cb"
-}
-
 resource "aws_subnet" "subnet_public_1" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "192.168.1.96/28"
+  cidr_block              = var.subnet1_cidr
   map_public_ip_on_launch = "true"
   availability_zone       = format("%sa", var.region)
 
