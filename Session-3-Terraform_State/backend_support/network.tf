@@ -8,14 +8,3 @@ resource "aws_vpc" "vpc" {
     Name = format("%s-vpc", var.prefix)
   }
 }
-
-resource "aws_subnet" "subnet_public_1" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.subnet1_cidr
-  map_public_ip_on_launch = "true"
-  availability_zone       = format("%sa", var.region)
-
-  tags = {
-    Name = format("%s-public-subnet1", var.prefix)
-  }
-}

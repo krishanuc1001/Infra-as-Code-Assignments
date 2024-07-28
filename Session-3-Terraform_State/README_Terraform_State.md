@@ -124,6 +124,9 @@ We are going to add an extra resource in AWS using the AWS Console then import t
 
 4. Using the [Terraform rm cmd](https://developer.hashicorp.com/terraform/cli/commands/state/rm) remove the resource you imported earlier.  You should also remove the related code from `network.tf` otherwise your solution will try to recreate it the next time it runs.  Once removed you can run terraform state list to confirm it's no longer managed by Terraform and you can also login to the AWS Console (UI) to confirm the resource still exists.
 
+
+![Terraform state remove](../images/Session-3-terraform-state-rm.png)
+
 5. Delete the subnet you create in step 1 manually using the AWS Console (UI).
 
 
