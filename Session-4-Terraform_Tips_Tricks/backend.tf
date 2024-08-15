@@ -5,7 +5,7 @@ terraform {
     region  = "ap-south-1"
     profile = "tw-beach"
 
-    dynamodb_table = "tw-krish-iac-lab-tfstate-lock"
+    dynamodb_table = "tw-krish-iac-lab-tfstate-locks"
     encrypt        = true
   }
 }

@@ -34,11 +34,11 @@ resource "aws_vpc" "vpc" {
 # }
 
 resource "aws_subnet" "subnet_public" {
-  count                   = 2
+  count                   = var.number_of_public_subnets
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = cidrsubnet(var.combined_public_subnet_cidr, 3, count.index)
+  cidr_block = cidrsubnet(var.vpc_cidr, 3, count.index + 1)
   map_public_ip_on_launch = "true"
-  availability_zone       = format("%s%s", var.region, element(["a", "b"], count.index))
+  availability_zone = format("%s%s", var.region, element(["a", "b"], count.index))
 
   tags = {
     Name = format("%s-public-subnet-%d", var.prefix, count.index + 1)
@@ -70,11 +70,11 @@ resource "aws_subnet" "subnet_public" {
 # }
 
 resource "aws_subnet" "subnet_private" {
-  for_each                = { for i in range(2) : i => i }
+  for_each                = {for i in range(var.number_of_private_subnets) : i => i}
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = cidrsubnet(var.combined_private_subnet_cidr, 3, each.key)
+  cidr_block = cidrsubnet(var.vpc_cidr, 3, each.key + 3)
   map_public_ip_on_launch = "false"
-  availability_zone       = format("%s%s", var.region, element(["a", "b"], each.key))
+  availability_zone = format("%s%s", var.region, element(["a", "b"], each.key))
 
   tags = {
     Name = format("%s-private-subnet-%d", var.prefix, each.key + 1)
@@ -105,11 +105,11 @@ resource "aws_subnet" "subnet_private" {
 # }
 
 resource "aws_subnet" "subnet_secure" {
-  for_each                = { for i in range(2) : i => i }
+  for_each                = {for i in range(var.number_of_secure_subnets) : i => i}
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = cidrsubnet(var.combined_secure_subnet_cidr, 4, each.key)
+  cidr_block = cidrsubnet(var.vpc_cidr, 3, each.key + 5)
   map_public_ip_on_launch = "false"
-  availability_zone       = format("%s%s", var.region, element(["a", "b"], each.key))
+  availability_zone = format("%s%s", var.region, element(["a", "b"], each.key))
 
   tags = {
     Name = format("%s-secure-subnet-%d", var.prefix, each.key + 1)
@@ -133,7 +133,7 @@ resource "aws_eip" "eip" {
 # NAT Gateway (associate it with the Elastic IP above, with one of the private subnets and use a suitable tag name)
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.eip.id
-  subnet_id     = aws_subnet.subnet_private_1.id
+  subnet_id     = aws_subnet.subnet_private[0].id
 
   tags = {
     Name = format("%s-nat", var.prefix)
@@ -169,23 +169,35 @@ resource "aws_route_table" "private_routetable" {
 }
 
 # Route Table Association for Public Subnets
-resource "aws_route_table_association" "public_subnet_1" {
-  subnet_id      = aws_subnet.subnet_public_1.id
-  route_table_id = aws_route_table.public_routetable.id
-}
+# resource "aws_route_table_association" "public_subnet_1" {
+#   subnet_id      = aws_subnet.subnet_public_1.id
+#   route_table_id = aws_route_table.public_routetable.id
+# }
 
-resource "aws_route_table_association" "public_subnet_2" {
-  subnet_id      = aws_subnet.subnet_public_2.id
+# resource "aws_route_table_association" "public_subnet_2" {
+#   subnet_id      = aws_subnet.subnet_public_2.id
+#   route_table_id = aws_route_table.public_routetable.id
+# }
+
+resource "aws_route_table_association" "public_subnet" {
+  count          = 2
+  subnet_id      = aws_subnet.subnet_public[count.index].id
   route_table_id = aws_route_table.public_routetable.id
 }
 
 # Route Table Association for Private Subnets
-resource "aws_route_table_association" "private_subnet_1" {
-  subnet_id      = aws_subnet.subnet_private_1.id
-  route_table_id = aws_route_table.private_routetable.id
-}
+# resource "aws_route_table_association" "private_subnet_1" {
+#   subnet_id      = aws_subnet.subnet_private_1.id
+#   route_table_id = aws_route_table.private_routetable.id
+# }
+#
+# resource "aws_route_table_association" "private_subnet_2" {
+#   subnet_id      = aws_subnet.subnet_private_2.id
+#   route_table_id = aws_route_table.private_routetable.id
+# }
 
-resource "aws_route_table_association" "private_subnet_2" {
-  subnet_id      = aws_subnet.subnet_private_2.id
+resource "aws_route_table_association" "private_subnet" {
+  for_each       = aws_subnet.subnet_private
+  subnet_id      = each.value.id
   route_table_id = aws_route_table.private_routetable.id
 }

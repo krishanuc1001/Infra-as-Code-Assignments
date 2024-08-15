@@ -31,9 +31,9 @@ variable "vpc_cidr" {
 #   description = "Subnet 2 CIDR block"
 # }
 
-variable "combined_public_subnet_cidr" {
-  type        = string
-  description = "Combined Public Subnet CIDR block"
+variable "number_of_public_subnets" {
+  description = "Number of public subnets in the VPC"
+  type = number
 }
 
 # variable "subnet3_cidr" {
@@ -46,9 +46,9 @@ variable "combined_public_subnet_cidr" {
 #   description = "Subnet 4 CIDR block"
 # }
 
-variable "combined_private_subnet_cidr" {
-  type        = string
-  description = "Combined Public Subnet CIDR block"
+variable "number_of_private_subnets" {
+  description = "Number of private subnets in the VPC"
+  type = number
 }
 
 # variable "subnet5_cidr" {
@@ -61,7 +61,7 @@ variable "combined_private_subnet_cidr" {
 #   description = "Subnet 6 CIDR block"
 # }
 
-variable "combined_secure_subnet_cidr" {
-  type        = string
-  description = "Combined Public Subnet CIDR block"
+variable "number_of_secure_subnets" {
+  description = "Number of secure subnets in the VPC"
+  type = number
 }
