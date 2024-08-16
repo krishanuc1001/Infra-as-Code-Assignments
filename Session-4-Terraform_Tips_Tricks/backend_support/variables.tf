@@ -9,3 +9,9 @@ variable "region" {
   description = "Region to deploy the solution"
   default     = "ap-south-1"
 }
+
+variable "profile" {
+  type        = string
+  description = "AWS profile to use for the deployment"
+  default     = "tw-beach"
+}
