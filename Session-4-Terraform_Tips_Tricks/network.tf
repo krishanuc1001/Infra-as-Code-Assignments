@@ -10,11 +10,11 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "subnet_public" {
-  count                   = var.number_of_public_subnets
+  count                   = local.number_of_public_subnets
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 3, count.index + 1)
+  cidr_block              = cidrsubnet(var.vpc_cidr, 3, count.index + 1)
   map_public_ip_on_launch = "true"
-  availability_zone = format("%s%s", var.region, element(["a", "b"], count.index))
+  availability_zone       = format("%s%s", var.region, element(["a", "b"], count.index))
 
   tags = {
     Name = format("%s-public-subnet-%d", var.prefix, count.index + 1)
@@ -22,11 +22,11 @@ resource "aws_subnet" "subnet_public" {
 }
 
 resource "aws_subnet" "subnet_private" {
-  for_each                = {for i in range(var.number_of_private_subnets) : i => i}
+  for_each                = { for i in range(local.number_of_private_subnets) : i => i }
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 3, each.key + 3)
+  cidr_block              = cidrsubnet(var.vpc_cidr, 3, each.key + 3)
   map_public_ip_on_launch = "false"
-  availability_zone = format("%s%s", var.region, element(["a", "b"], each.key))
+  availability_zone       = format("%s%s", var.region, element(["a", "b"], each.key))
 
   tags = {
     Name = format("%s-private-subnet-%d", var.prefix, each.key + 1)
@@ -34,11 +34,11 @@ resource "aws_subnet" "subnet_private" {
 }
 
 resource "aws_subnet" "subnet_secure" {
-  for_each                = {for i in range(var.number_of_secure_subnets) : i => i}
+  for_each                = { for i in range(local.number_of_secure_subnets) : i => i }
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 3, each.key + 5)
+  cidr_block              = cidrsubnet(var.vpc_cidr, 3, each.key + 5)
   map_public_ip_on_launch = "false"
-  availability_zone = format("%s%s", var.region, element(["a", "b"], each.key))
+  availability_zone       = format("%s%s", var.region, element(["a", "b"], each.key))
 
   tags = {
     Name = format("%s-secure-subnet-%d", var.prefix, each.key + 1)
@@ -99,7 +99,7 @@ resource "aws_route_table" "private_routetable" {
 
 # Route Table Association for Public Subnets
 resource "aws_route_table_association" "public_subnet" {
-  count          = 2
+  count          = local.number_of_route_tables_association_public_subnet
   subnet_id      = aws_subnet.subnet_public[count.index].id
   route_table_id = aws_route_table.public_routetable.id
 }
