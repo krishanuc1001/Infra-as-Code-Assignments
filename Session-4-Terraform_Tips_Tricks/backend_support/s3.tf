@@ -6,6 +6,10 @@ resource "aws_s3_bucket" "s3_bucket" {
     Name        = "${var.prefix}-tfstate"
     Environment = "Dev"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_s3_bucket_versioning" "s3_bucket_versioning" {
