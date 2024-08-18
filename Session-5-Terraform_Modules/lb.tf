@@ -1,8 +1,8 @@
 resource "aws_lb" "lb" {
-  name = format("%s-lb", var.prefix)
+  name               = format("%s-lb", var.prefix)
   internal           = false
   load_balancer_type = "application"
-  security_groups = [aws_security_group.lb_sg.id]
+  security_groups    = [aws_security_group.lb_sg.id]
   subnets            = [for subnet in module.vpc.public_subnets : subnet]
   tags = {
     Name = format("%s-lb", var.prefix)
@@ -10,7 +10,7 @@ resource "aws_lb" "lb" {
 }
 
 resource "aws_lb_target_group" "tg" {
-  name = format("%s-tg", var.prefix)
+  name        = format("%s-tg", var.prefix)
   port        = 8000
   protocol    = "HTTP"
   vpc_id      = local.vpc_id
@@ -44,14 +44,14 @@ resource "aws_lb_listener" "lb_listener" {
 }
 
 resource "aws_security_group" "lb_sg" {
-  name = format("%s-lb-sg", var.prefix)
+  name        = format("%s-lb-sg", var.prefix)
   description = "Allow TLS inbound traffic and all outbound traffic"
   vpc_id      = local.vpc_id
 
   ingress {
-    from_port = 80
-    to_port   = 80
-    protocol  = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -63,9 +63,9 @@ resource "aws_security_group" "lb_sg" {
   }
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
