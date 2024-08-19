@@ -13,6 +13,7 @@ module "vpc" {
   azs             = local.azs
   public_subnets  = local.public_subnet_cidrs
   private_subnets = local.private_subnet_cidrs
+  intra_subnets   = local.secure_subnet_cidrs
 
   enable_nat_gateway = true
   single_nat_gateway = true
