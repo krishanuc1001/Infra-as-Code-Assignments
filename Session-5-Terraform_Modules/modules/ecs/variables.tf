@@ -27,3 +27,28 @@ variable "alb_security_group_id" {
   description = "Security group Id"
   type        = string
 }
+
+variable "db_address" {
+  description = "Database address"
+  type        = string
+}
+
+variable "db_name" {
+  description = "Database name"
+  type        = string
+}
+
+variable "db_username" {
+  description = "Database username"
+  type        = string
+}
+
+variable "db_secret_arn" {
+  description = "Database secret ARN"
+  type        = string
+}
+
+variable "db_secret_key_id" {
+  description = "Database secret key ID"
+  type        = string
+}
