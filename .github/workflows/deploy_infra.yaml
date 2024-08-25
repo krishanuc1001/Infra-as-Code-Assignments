@@ -38,8 +38,8 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -var-file= ${{ env.VAR_FILE }}
+        run: terraform plan -var-file=${{ env.VAR_FILE }}
 
       - name: Terraform Apply
-        run: terraform apply -var-file= ${{ env.VAR_FILE }} -auto-approve
+        run: terraform apply -var-file=${{ env.VAR_FILE }} -auto-approve
 
