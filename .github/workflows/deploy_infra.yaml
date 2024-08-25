@@ -1,0 +1,34 @@
+name: Deploy Infra
+
+on: workflow_dispatch
+
+env:
+  AWS_REGION: ap-south-1
+  IAM_ROLE: arn:aws:iam::160071257600:role/tw-krish-iac-lab-github-actions-role
+
+jobs:
+
+  # Can add extra jobs/steps to run any pre deploy tasks
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@2ec54502e3e7b5d9591613811da6daded35caa19
+        with:
+          role-session-name: GitHubActionsSession
+          role-to-assume: ${{ env.IAM_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Get aws identity
+        run: |
+          aws sts get-caller-identity            
+
+      # Can add extra steps to run Terraform to create the AWS resources
