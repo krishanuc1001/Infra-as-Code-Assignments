@@ -1,0 +1,38 @@
+name: Destroy Infra
+
+on: workflow_dispatch
+
+env:
+  AWS_REGION: ap-south-1
+  IAM_ROLE: arn:aws:iam::160071257600:role/tw-krish-iac-lab-github-actions-role
+  VAR_FILE: dev.tfvars
+
+jobs:
+
+  destroy:
+    name: Destroy
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-session-name: GitHubActionsSession
+          role-to-assume: ${{ env.IAM_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destroy -var-file=${{ env.VAR_FILE }} -auto-approve
