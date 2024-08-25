@@ -19,10 +19,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get aws identity
-        run: |
-          aws sts get-caller-identity
-
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         with:
