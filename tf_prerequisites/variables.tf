@@ -10,12 +10,6 @@ variable "region" {
   default     = "ap-south-1"
 }
 
-variable "profile" {
-  type        = string
-  description = "AWS profile to use for the deployment"
-  default     = "tw-beach"
-}
-
 variable "repo_name" {
   type        = string
   description = "Name of the repository"
