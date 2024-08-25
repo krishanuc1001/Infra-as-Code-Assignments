@@ -43,7 +43,7 @@ jobs:
         run: tflint --init
 
       - name: Run TFLint
-        run: tflint -f compact
+        run: tflint --var-file=${{ env.VAR_FILE }}
 
       - name: Scan with tfsec
         uses: aquasecurity/tfsec-action@v1.0.0
@@ -71,6 +71,7 @@ jobs:
 
   deploy:
     name: Deploy
+    needs: pre-deploy
     runs-on: ubuntu-latest
     permissions:
       id-token: write
