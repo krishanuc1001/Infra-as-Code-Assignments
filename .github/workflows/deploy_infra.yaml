@@ -1,6 +1,6 @@
 name: Deploy Infra
 
-on: push
+on: workflow_dispatch
 
 env:
   AWS_REGION: ap-south-1
