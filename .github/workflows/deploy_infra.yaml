@@ -8,6 +8,71 @@ env:
   VAR_FILE: dev.tfvars
 
 jobs:
+
+  pre-deploy:
+    name: Pre-Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-session-name: GitHubActionsSession
+          role-to-assume: ${{ env.IAM_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Get aws identity
+        run: |
+          aws sts get-caller-identity
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+
+      - name: Format Terraform
+        run: terraform fmt -check
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: v0.53.0
+
+      - name: Init TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: tflint -f compact
+
+      - name: Scan with tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          working_directory: '.'
+          additional_args: --format json --output tfsec-results.json --tfvars-file=${{ env.VAR_FILE }}
+          soft_fail: true
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=${{ env.VAR_FILE }}
+
+      - name: Render terraform docs
+        uses: terraform-docs/gh-actions@main
+        with:
+          working-dir: .
+          output-file: README_TerraformDocs.md
+          output-method: inject
+
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -37,9 +102,5 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Plan
-        run: terraform plan -var-file=${{ env.VAR_FILE }}
-
       - name: Terraform Apply
         run: terraform apply -var-file=${{ env.VAR_FILE }} -auto-approve
-
