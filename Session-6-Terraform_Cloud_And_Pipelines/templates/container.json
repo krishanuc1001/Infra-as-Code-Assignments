@@ -1,0 +1,45 @@
+[
+  {
+    "name": "${application}",
+    "image": "${image_url}",
+    "essential": true,
+    "portMappings": [
+      {
+        "hostPort": 8000,
+        "containerPort": 8000,
+        "protocol": "tcp"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${cloudwatch_group}",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "${application}"
+      }
+    },
+    "environment": [
+      {
+        "name": "db_address",
+        "value": "${db_address}"
+      },
+      {
+        "name": "db_name",
+        "value": "${db_name}"
+      },
+      {
+        "name": "db_username",
+        "value": "${db_username}"
+      }
+    ],
+    "secrets": [
+      {
+        "name": "db_password",
+        "valueFrom": "${db_password_arn}:db_password::"
+      }
+    ],
+    "links": [],
+    "command": [],
+    "entryPoint": []
+  }
+]
