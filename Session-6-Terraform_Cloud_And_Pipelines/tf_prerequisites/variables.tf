@@ -15,3 +15,9 @@ variable "profile" {
   description = "AWS profile to use for the deployment"
   default     = "tw-beach"
 }
+
+variable "repo_name" {
+  type        = string
+  description = "Name of the repository"
+  default     = "krishanuc1001/Infra-as-Code-Assignments"
+}
