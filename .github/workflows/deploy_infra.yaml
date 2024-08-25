@@ -5,11 +5,9 @@ on: push
 env:
   AWS_REGION: ap-south-1
   IAM_ROLE: arn:aws:iam::160071257600:role/tw-krish-iac-lab-github-actions-role
+  VAR_FILE: dev.tfvars
 
 jobs:
-
-  # Can add extra jobs/steps to run any pre deploy tasks
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -31,4 +29,17 @@ jobs:
         run: |
           aws sts get-caller-identity            
 
-      # Can add extra steps to run Terraform to create the AWS resources
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -var-file= ${{ env.VAR_FILE }}
+
+      - name: Terraform Apply
+        run: terraform apply -var-file= ${{ env.VAR_FILE }} -auto-approve
+
