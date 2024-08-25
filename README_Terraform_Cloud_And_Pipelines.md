@@ -28,12 +28,12 @@ You will learn how to deploy using a CI/CD pipeline in GitHub Actions as well as
 
 Users connect to the application through a public facing load balancer which has a target of an ECS task container which resides in the private subnets spread across two AZs.  In this session we're adding a GitHub IAM Role which GitHub Actions assumes using OIDC to authenticate with AWS.  You'll create a GitHub Action to deploy and destroy the AWS infrastructure as well as another GitHub Acion to deploy the application to the ECS service.
 
-![Architecture diagram](../images/Session-6-AWS_Architecture.png)
+![Architecture diagram](images/Session-6-AWS_Architecture.png)
 
 
 ### Pre-requisites, Deploy and Clean Up Instructions
 
-Please read the root level [README](../README.md) for instructions that are the same for every session on how to authenticate with AWS using the AWS CLI and how to run the Terraform commands to manage your infrastructure.
+Please read the root level [README](README.md) for instructions that are the same for every session on how to authenticate with AWS using the AWS CLI and how to run the Terraform commands to manage your infrastructure.
 
 Hint: In the provider block, region variable or the `*.tfvars` file there is a value specified for the region, you should update this to match your AWS profile region.
 

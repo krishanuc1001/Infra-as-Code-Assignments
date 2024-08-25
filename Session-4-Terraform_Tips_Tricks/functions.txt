@@ -1,8 +1,0 @@
-We can run these terraform functions using terraform console command after terraform init.
-
-min(1, 2, 3)
-split("-", "k-c-10")
-keys({"a" = 1, "b" = 2, "c" = 3})
-base64encode("krishPassword@1001")
-basename("Session-4-Terraform_Tips_Tricks/functions.txt")
-cidrsubnet("192.168.0.0/24", 3, 2)

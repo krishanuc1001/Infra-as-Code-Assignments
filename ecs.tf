@@ -1,5 +1,5 @@
 module "ecs" {
-  source = "./modules/ecs/"
+  source = "modulescs"
 
   prefix                = var.prefix
   region                = var.region
