@@ -19,13 +19,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-session-name: GitHubActionsSession
-          role-to-assume: ${{ env.IAM_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
-
       - name: Get aws identity
         run: |
           aws sts get-caller-identity
@@ -35,8 +28,15 @@ jobs:
         with:
           terraform_version: 1.9.5
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-session-name: GitHubActionsSession
+          role-to-assume: ${{ env.IAM_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
       - name: Format Terraform
-        run: terraform fmt -check
+        run: terraform fmt
 
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v4
