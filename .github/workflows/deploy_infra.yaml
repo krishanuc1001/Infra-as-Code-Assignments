@@ -46,6 +46,7 @@ jobs:
         run: tflint --var-file=${{ env.VAR_FILE }}
 
       - name: Scan with tfsec
+        id: tfsec
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
           working_directory: '.'
