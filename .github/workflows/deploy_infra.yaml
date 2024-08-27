@@ -50,7 +50,7 @@ jobs:
         with:
           working_directory: '.'
           additional_args: --format json --out tfsec-results.json --tfvars-file=${{ env.VAR_FILE }}
-          soft_fail: true
+#          soft_fail: true
 
       - name: Terraform Init
         run: terraform init
