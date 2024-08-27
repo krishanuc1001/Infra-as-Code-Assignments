@@ -49,7 +49,7 @@ jobs:
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
           working_directory: '.'
-          additional_args: --format json --out tfsec-results.json --tfvars-file=${{ env.VAR_FILE }}
+          additional_args: --tfvars-file=${{ env.VAR_FILE }}
 #          soft_fail: true
 
       - name: Terraform Init
