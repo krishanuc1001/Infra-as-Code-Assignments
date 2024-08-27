@@ -49,8 +49,13 @@ jobs:
         uses: aquasecurity/tfsec-action@v1.0.0
         with:
           working_directory: '.'
-          additional_args: --tfvars-file=${{ env.VAR_FILE }}
-#          soft_fail: true
+          format: lovely,markdown
+          additional_args: --force-all-dirs --tfvars-file=${{ env.VAR_FILE }} --out tfsec
+          soft_fail: true
+
+      - name: tfsec result
+        if: contains(fromJSON('["success", "failure"]'), steps.tfsec.outcome) && always()
+        run: echo "$(cat tfsec.markdown)" >> $GITHUB_STEP_SUMMARY
 
       - name: Terraform Init
         run: terraform init
