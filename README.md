@@ -16,13 +16,6 @@ This code repository accompanies the slides, videos and demo code for the Infra 
 
 ### Pre-requisites
 
-#### AWS Console Access
-
-You can grant permissions for yourself to access the AWS beach account via Okta.  Click on “Add apps” in the left hand menu, type “beach” into the search field, click “Add” next to “Request AWS Beach Access”, then you should have a new tile available for AWS access.
-
-![AWS access via Okta](./images/AWS_access.png)
-
-
 #### AWS CLI Installed and Configured
 
 Before trying to access the AWS Beach account via the CLI you should have already added it via Okta, see above.
